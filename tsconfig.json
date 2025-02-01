@@ -1,0 +1,16 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-native", // Asegura que JSX esté configurado para React Native
+    "strict": true, // Habilita el modo estricto de TypeScript
+    "skipLibCheck": true, // Omite la verificación de tipos en las librerías
+    "esModuleInterop": true, // Permite la interoperabilidad entre CommonJS y ES Modules
+    "allowSyntheticDefaultImports": true, // Permite importaciones sintéticas
+    "forceConsistentCasingInFileNames": true, // Fuerza consistencia en mayúsculas/minúsculas en nombres de archivos
+    "moduleResolution": "node", // Usa la resolución de módulos de Node.js
+    "resolveJsonModule": true, // Permite importar archivos JSON
+    "isolatedModules": true // Asegura compatibilidad con Babel
+  },
+  "include": ["src"], // Incluye la carpeta `src` para la compilación
+  "exclude": ["node_modules"] // Excluye la carpeta `node_modules`
+}
