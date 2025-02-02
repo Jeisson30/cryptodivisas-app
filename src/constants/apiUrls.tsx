@@ -1,4 +1,4 @@
-//manejamos peticiones a entorno producción
+// Apis de petición de la documentación
 
 const BASE_URL = 'https://api.coinlore.net/api';
 

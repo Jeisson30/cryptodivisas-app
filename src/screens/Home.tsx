@@ -5,22 +5,28 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {getAllCryptos} from '../services/cryptoService';
 import {CryptoCurrency} from '../types';
+import CryptoFilter from '../components/CryptoFilter';
 
 const Home = () => {
   const [cryptos, setCryptos] = useState<CryptoCurrency[]>([]);
+  const [filteredCryptos, setFilteredCryptos] = useState<CryptoCurrency[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const fetchCryptos = async () => {
       try {
         const data = await getAllCryptos();
         setCryptos(data.data);
+        setFilteredCryptos(data.data);
       } catch (err) {
-        setError('Error retrieving data');
+        setError('Error al obtener los datos');
       } finally {
         setLoading(false);
       }
@@ -29,11 +35,22 @@ const Home = () => {
     fetchCryptos();
   }, []);
 
+  const filterChange = (query: string) => {
+    if (!query) {
+      setFilteredCryptos(cryptos);
+    } else {
+      const filtered = cryptos.filter(crypto =>
+        crypto.name.toLowerCase().includes(query.toLowerCase()),
+      );
+      setFilteredCryptos(filtered);
+    }
+  };
+
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#FF9800" />
-        <Text style={styles.loadingText}>Loading cryptos...</Text>
+        <Text style={styles.loadingText}>Loading Cryptos...</Text>
       </View>
     );
   }
@@ -48,23 +65,33 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={cryptos}
-        keyExtractor={(item: CryptoCurrency) => item.id.toString()}
-        numColumns={2}
-        columnWrapperStyle={styles.row}
-        renderItem={({item}: {item: CryptoCurrency}) => (
-          <View style={styles.card}>
-            <Text style={styles.name}>
-              {item.name} ({item.symbol})
-            </Text>
-            <Text style={styles.price}>
-              ${parseFloat(item.price_usd).toFixed(2)}
-            </Text>
-            <Text style={styles.rank}>Rank: {item.rank}</Text>
-          </View>
-        )}
-      />
+      <CryptoFilter onFilterChange={filterChange} />
+      {/* incluimos operador ternario para validar si la crypto existe al momento de filtrar */}
+      {filteredCryptos.length === 0 ? (
+        <Text style={styles.noResults}>No found crypto</Text>
+      ) : (
+        <FlatList
+          data={filteredCryptos}
+          keyExtractor={(item: CryptoCurrency) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.row}
+          renderItem={({item}: {item: CryptoCurrency}) => (
+            <TouchableOpacity
+              style={styles.card}
+              onPress={() =>
+                navigation.navigate('Detail', {cryptoId: item.id})
+              }>
+              <Text style={styles.name}>
+                {item.name} ({item.symbol})
+              </Text>
+              <Text style={styles.price}>
+                ${parseFloat(item.price_usd).toFixed(2)}
+              </Text>
+              <Text style={styles.rank}>Rank: {item.rank}</Text>
+            </TouchableOpacity>
+          )}
+        />
+      )}
     </View>
   );
 };
@@ -129,6 +156,12 @@ const styles = StyleSheet.create({
   errorText: {
     fontSize: 18,
     color: 'red',
+  },
+  noResults: {
+    fontSize: 18,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 20,
   },
 });
 
