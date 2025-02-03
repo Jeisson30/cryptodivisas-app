@@ -1,79 +1,85 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# CryptoDivisas App
 
-# Getting Started
+Este proyecto es una aplicación que muestra información sobre criptomonedas, incluyendo detalles como el nombre, precio, volumen, y mercados  de cotización para cada una. La aplicación permite filtrar y buscar, ver detalles específicos y utilizar una calculadora para convertir valores entre USD y criptomonedas.
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Requisitos Previos
 
-## Step 1: Start the Metro Server
+Antes de comenzar, asegúrate de tener los siguientes programas instalados:
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+- **Node.js** versión 20.9.0
+- **NVM (Node Version Manager)**: Para gestionar versiones de Node.js
+- **NPM (Node Package Manager)**: Para manejar las dependencias del proyecto
 
-To start Metro, run the following command from the _root_ of your React Native project:
+### Instalación de NVM y Node.js
 
-```bash
-# using npm
-npm start
+1. Si no tienes **NVM** instalado, puedes hacerlo con el siguiente comando:
 
-# OR using Yarn
-yarn start
-```
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+2. Una vez tengas NVM instalado, puedes instalar y usar la versión de Node.js 20.9.0 con los siguientes comandos:
 
-## Step 2: Start your Application
+   ```
+   nvm install 20.9.0
+   nvm use 20.9.0
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+   ```
+   Verifica la version de nodeJs:
 
-### For Android
+   *node -v*
 
-```bash
-# using npm
-npm run android
+## Clonar el Proyecto
 
-# OR using Yarn
-yarn android
-```
+   Clona el proyecto desde el repositorio en GitHub:
 
-### For iOS
+   git clone -b main https://github.com/Jeisson30/cryptodivisas-app.git
 
-```bash
-# using npm
-npm run ios
+   - Una vez clonado abre el proyecto en tu editor de código favorito (por ejemplo, Visual Studio Code, Sublime Text, etc.)
 
-# OR using Yarn
-yarn ios
-```
+   En la raíz del proyecto, ejecuta el siguiente comando para instalar las dependencias:
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+   *npm install*
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+     *Antes de ejecutar el comando,  debes tener un emulador configurado en android studio(ver documento adjunto) o configurar un dispositivo fisico para ver el desarrollo*
 
-## Step 3: Modifying your App
+   una vez instaladas las dependencias navega hasta la carpeta de android:
 
-Now that you have successfully run the app, let's modify it.
+   cd android y ejecuta el siguiente comando:
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+      *npm run android*
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+   ## Modo Desarrollo.
 
-## Congratulations! :tada:
+   Una vez que la app esté instalada, si deseas acceder al modo desarrollo, ejecuta el siguiente comando dentro de la carpeta android:
 
-You've successfully run and modified your React Native App. :partying_face:
+   npm start
+   Esto iniciará el servidor Metro y habilitará el modo de desarrollo.
 
-### Now what?
+   Durante el modo de desarrollo, puedes recargar la app presionando la tecla r o haciendo un reload para ver los cambios en tiempo real.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+## Características de la App
 
-# Troubleshooting
+### Consulta de criptomonedas: 
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+   La app obtiene datos como el nombre, precio, volumen y otros detalles relevantes de las criptomonedas a través de la API de Coinlore.
 
-# Learn More
+### Búsqueda: 
+   Puedes filtrar criptomonedas por nombre para encontrar fácilmente la que prefieras. Si no se encuentra, se mostrará un mensaje de error breve.
 
-To learn more about React Native, take a look at the following resources:
+### Detalles de criptomonedas: 
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+   Al hacer tap en una tarjeta de criptomoneda, puedes ver detalles más específicos, como los mercados en los que se cotiza.
+
+### Calculadora: 
+
+   La app incluye una calculadora que convierte valores de USD a la criptomoneda seleccionada.
+   Desarrollo
+   Se tomaron en cuenta las especificaciones tecnológicas requeridas para el desarrollo de la app y se cubrieron los puntos establecidos. Puedes validar estos aspectos revisando el código fuente proporcionado.
+
+## Aspectos de Mejora
+El diseño de la app podría mejorarse para optimizar la experiencia de usuario, utilizando herramientas como Figma o algún otro entorno de diseño gráfico, alineado con la marca empresarial.
+
+## Contacto
+Cualquier inquietud será aclarada con gusto.
+
+Cordialmente,
+** Jeisson Pulido **
