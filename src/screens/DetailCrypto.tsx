@@ -5,6 +5,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   FlatList,
+  TextInput,
+  Button,
 } from 'react-native';
 import {RouteProp} from '@react-navigation/native';
 import {StackNavigationProp} from '@react-navigation/stack';
@@ -32,8 +34,9 @@ const Detail = ({route}: Props) => {
   const [markets, setMarkets] = useState<Market[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [usdAmount, setUsdAmount] = useState('');
+  const [cryptoAmount, setCryptoAmount] = useState('');
 
-  // Por params se trae el Id de la crypto  y se pasa como parametro a los servicios definidos.
   useEffect(() => {
     const fetchCryptoDetails = async () => {
       try {
@@ -53,6 +56,14 @@ const Detail = ({route}: Props) => {
 
     fetchCryptoDetails();
   }, [cryptoId]);
+
+  //COnversion de dolar a cantidad de moneda seleccionada.
+  const conversionCoin = () => {
+    if (crypto && usdAmount) {
+      const conversion = parseFloat(usdAmount) / parseFloat(crypto.price_usd);
+      setCryptoAmount(conversion.toFixed(6));
+    }
+  };
 
   if (loading) {
     return (
@@ -103,7 +114,27 @@ const Detail = ({route}: Props) => {
         </Text>
       </View>
 
-      {/* List Market */}
+      {/* Calculadora dolar/cantidad cryto */}
+      <View style={styles.converterContainer}>
+        <Text style={styles.converterTitle}>
+          Convert USD to {crypto.symbol}
+        </Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Enter USD amount"
+          keyboardType="numeric"
+          value={usdAmount}
+          onChangeText={setUsdAmount}
+        />
+        <Button title="Convert" onPress={conversionCoin} color="#FF9800" />
+        {cryptoAmount !== '' && (
+          <Text style={styles.result}>
+            {usdAmount} USD = {cryptoAmount} {crypto.symbol}
+          </Text>
+        )}
+      </View>
+      {/*
+      Listas de mercados donde se cotiza la cryptomoneda */}
       <Text style={styles.marketTitle}>Markets:</Text>
       {markets.length > 0 ? (
         <FlatList
@@ -115,7 +146,8 @@ const Detail = ({route}: Props) => {
             <View style={styles.marketItem}>
               <Text style={styles.marketName}>{item.name}</Text>
               <Text style={styles.marketPair}>
-                {item.base}/{item.quote} - ${item.price_usd.toFixed(2)}
+                {item.base}/{item.quote} - $
+                {item.price_usd ? item.price_usd.toFixed(2) : 'Price not found'}
               </Text>
             </View>
           )}
@@ -221,6 +253,41 @@ const styles = StyleSheet.create({
   noMarketsText: {
     fontSize: 16,
     color: '#777',
+  },
+  converterContainer: {
+    backgroundColor: '#FFF',
+    padding: 15,
+    borderRadius: 10,
+    width: '90%',
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  converterTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 10,
+  },
+  input: {
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#CCC',
+    padding: 8,
+    marginBottom: 10,
+    borderRadius: 5,
+    textAlign: 'center',
+    color: '#000',
+  },
+  result: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FF9800',
+    marginTop: 10,
   },
 });
 

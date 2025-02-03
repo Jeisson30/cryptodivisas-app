@@ -65,6 +65,7 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
+      <Text style={styles.namePrincipal}>Cryptodivisas</Text>
       <CryptoFilter onFilterChange={filterChange} />
       {/* incluimos operador ternario para validar si la crypto existe al momento de filtrar */}
       {filteredCryptos.length === 0 ? (
@@ -85,7 +86,10 @@ const Home = () => {
                 {item.name} ({item.symbol})
               </Text>
               <Text style={styles.price}>
-                ${parseFloat(item.price_usd).toFixed(2)}
+                $
+                {item.price_usd
+                  ? parseFloat(item.price_usd).toFixed(2)
+                  : 'Price no found'}
               </Text>
               <Text style={styles.rank}>Rank: {item.rank}</Text>
             </TouchableOpacity>
@@ -130,6 +134,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333',
     marginBottom: 4,
+    textAlign: 'center',
+  },
+  namePrincipal: {
+    fontSize: 36,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 6,
+    marginTop: 6,
     textAlign: 'center',
   },
   price: {
